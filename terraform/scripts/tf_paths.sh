@@ -1,6 +1,11 @@
 statePath="<%=state.stateList[0].statePath%>"
-planPath="<%=state.stateList[0].planPath%>"
-contentPath="<%=state.stateList[0].contentPath%>"
-workingPath="<%=state.stateList[0].workingPath%>"
+echo "State Path: $statePath"
 
-echo "StatePath=$statePath, PlanPath=$planPath, ContentPath=$contentPath, Working Path=$workingPath"
+planPath="<%=state.stateList[0].planPath%>"
+echo "Plan Path: $planPath"
+
+contentPath="<%=state.stateList[0].contentPath%>"
+echo "Content Path: $contentPath"
+
+workingPath="<%=state.stateList[0].workingPath%>"
+echo "Working Path: $workingPath"
