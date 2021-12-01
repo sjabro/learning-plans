@@ -36,17 +36,20 @@ variable "region" {
 variable "resource_name" {
     type = string
     default = "morpheus-training"
-    #default = "<%customOptions.resourceName%>" 
+    #default = "<%customOptions.resourceName%>"
+    description = "Will be used to name all resources in the deployment"
 }
 
 variable "vpc_root_cidr" {
     type = string
     default = "172.205.0.0/24"
+    description = "The CIDR used to create the VPC and the subnets"
 }
 
 variable "purpose" {
     type = string
-    default = "demo" 
+    default = "demo"
+    description = "Purpose for this deployment"
 }
 
 ################################################################################
@@ -78,7 +81,7 @@ module "vpc" {
   tags = {
     purpose = var.purpose
   }
-  
+
   vpc_tags = {
     "Name" = "${var.resource_name}_vpc"
   }
