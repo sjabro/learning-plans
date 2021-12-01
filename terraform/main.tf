@@ -44,6 +44,11 @@ variable "vpc_root_cidr" {
     default = "172.205.0.0/24"
 }
 
+variable "purpose" {
+    type = string
+    default = "demo" 
+}
+
 ################################################################################
 # VPC Module
 ################################################################################
@@ -70,6 +75,10 @@ module "vpc" {
     "Name" = "${var.resource_name}_pub_subnet"
   }
 
+  tags = {
+    purpose = var.purpose
+  }
+  
   vpc_tags = {
     "Name" = "${var.resource_name}_vpc"
   }
