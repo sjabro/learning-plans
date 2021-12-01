@@ -33,13 +33,6 @@ variable "region" {
     type = string
 }
 
-variable "resource_name" {
-    type = string
-    default = "morpheus-training"
-    #default = "<%customOptions.resourceName%>"
-    description = "Will be used to name all resources in the deployment"
-}
-
 variable "vpc_root_cidr" {
     type = string
     default = "172.205.0.0/24"
@@ -48,8 +41,12 @@ variable "vpc_root_cidr" {
 
 variable "purpose" {
     type = string
-    default = "demo"
+    default = "<%=customOptions.purpose%>"
     description = "Purpose for this deployment"
+}
+
+locals {
+  name = "<%=instance.name%>"
 }
 
 ################################################################################
@@ -59,7 +56,7 @@ variable "purpose" {
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = var.resource_name
+  name = local.name
   cidr = var.vpc_root_cidr
 
   azs             = ["${var.region}a", "${var.region}b"]
@@ -72,10 +69,10 @@ module "vpc" {
   single_nat_gateway = false
 
   private_subnet_tags = {
-    "Name" = "${var.resource_name}_priv_subnet"
+    "Name" = "${local.name}_priv_subnet"
   }
   public_subnet_tags = {
-    "Name" = "${var.resource_name}_pub_subnet"
+    "Name" = "${local.name}_pub_subnet"
   }
 
   tags = {
@@ -83,7 +80,7 @@ module "vpc" {
   }
 
   vpc_tags = {
-    "Name" = "${var.resource_name}_vpc"
+    "Name" = "${local.name}_vpc"
   }
 }
 
@@ -95,7 +92,7 @@ module "iam_user" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-user"
   version = "~> 4.3"
 
-  name          = "${var.resource_name}_user"
+  name          = "${local.name}_user"
   force_destroy = true
 
   create_iam_user_login_profile = false
