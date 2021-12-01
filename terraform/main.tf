@@ -79,7 +79,7 @@ module "vpc" {
   }
 
   tags = {
-    purpose = var.purpose
+    Purpose = var.purpose
   }
 
   vpc_tags = {
